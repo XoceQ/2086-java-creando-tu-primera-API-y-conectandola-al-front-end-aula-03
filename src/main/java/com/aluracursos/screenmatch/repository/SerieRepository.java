@@ -7,6 +7,7 @@ import com.aluracursos.screenmatch.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,7 @@ public interface SerieRepository extends JpaRepository<Serie,Long> {
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s.Id = :id AND e.temporada = :numeroTemporada")
     List<Episodio> obtenerTemporadasPorNumero(Long id, Long numeroTemporada);
+
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.evaluacion DESC LIMIT 5")
+    List<Episodio> obtenerTopEpisodios(Serie serie);
 }
